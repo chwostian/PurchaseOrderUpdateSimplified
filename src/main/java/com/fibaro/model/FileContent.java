@@ -1,6 +1,9 @@
 package com.fibaro.model;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+
 
 public class FileContent {
     private String SUPPLIER;
@@ -8,10 +11,10 @@ public class FileContent {
     private String PO;
     private Integer LINE;
     private String SKU;
-    private Date CONFIRMED_DELIVERY_DATE;
+    private LocalDate CONFIRMED_DELIVERY_DATE;
     private Integer REMAINING_QUANTITY;
 
-    public FileContent(String SUPPLIER, Long CODE, String PO, Integer LINE, String SKU, Date CONFIRMED_DELIVERY_DATE, Integer REMAINING_QUANTITY) {
+    public FileContent(String SUPPLIER, Long CODE, String PO, Integer LINE, String SKU, LocalDate CONFIRMED_DELIVERY_DATE, Integer REMAINING_QUANTITY) {
         this.SUPPLIER = SUPPLIER;
         this.CODE = CODE;
         this.PO = PO;
@@ -64,11 +67,11 @@ public class FileContent {
         this.SKU = SKU;
     }
 
-    public Date getCONFIRMED_DELIVERY_DATE() {
+    public LocalDate getCONFIRMED_DELIVERY_DATE() {
         return CONFIRMED_DELIVERY_DATE;
     }
 
-    public void setCONFIRMED_DELIVERY_DATE(Date CONFIRMED_DELIVERY_DATE) {
+    public void setCONFIRMED_DELIVERY_DATE(LocalDate CONFIRMED_DELIVERY_DATE) {
         this.CONFIRMED_DELIVERY_DATE = CONFIRMED_DELIVERY_DATE;
     }
 
