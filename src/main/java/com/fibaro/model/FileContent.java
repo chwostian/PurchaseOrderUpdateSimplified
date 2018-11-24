@@ -95,4 +95,10 @@ public class FileContent {
                 ", REMAINING_QUANTITY=" + REMAINING_QUANTITY +
                 '}';
     }
-}
+    public int compareTo(FileContent f) {
+        if (CODE.compareTo(f.CODE) == 0) {
+            if (SKU.compareTo(f.SKU) == 0) {
+                return CONFIRMED_DELIVERY_DATE.compareTo(f.CONFIRMED_DELIVERY_DATE);
+            } else { return SKU.compareTo(f.SKU);}
+        } else { return CODE.compareTo(f.CODE);}
+}}

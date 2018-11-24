@@ -13,15 +13,18 @@ import java.io.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Component
 public class FileContentDao {
-    private static Set<FileContent> fileContentSet = new HashSet<>();
+    private static SortedSet<FileContent> fileContentSet = new TreeSet<>(FileContent::compareTo);
     private MultipartFile file;
 
-    public static Set<FileContent> loadFileContent(MultipartFile file) throws IOException, ParseException {
+    public static SortedSet<FileContent> loadFileContent(MultipartFile file) throws IOException, ParseException {
         File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+file.getOriginalFilename());
         file.transferTo(convFile);
         Reader in = new FileReader(convFile);
