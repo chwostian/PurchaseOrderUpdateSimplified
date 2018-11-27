@@ -149,4 +149,15 @@ public class PurchaseOrders {
                 ", nazwa_pelna='" + nazwa_pelna + '\'' +
                 '}';
     }
+
+    public int compareTo(PurchaseOrders p) {
+        if (numer_kontrahenta.compareTo(p.numer_kontrahenta) == 0) {
+            if (numer_zamowienia.compareTo(p.numer_zamowienia) == 0) {
+                if (numer_pozycji.compareTo(p.numer_pozycji) == 0)   {
+                    return indeks.compareTo(p.indeks);
+                }  else {return numer_pozycji.compareTo(p.numer_pozycji);}
+            } else {return numer_zamowienia.compareTo(p.numer_zamowienia);}
+        } else { return numer_kontrahenta.compareTo(p.numer_kontrahenta);}
+
+    }
 }

@@ -10,10 +10,13 @@
 <html>
 <head>
     <title>check</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="resources/css2.css">
 </head>
 <body>
 <h2>Submitted File</h2>
 <table>
+    <thead>
     <tr>
         <th>SUPPLIER</th>
         <th>CODE</th>
@@ -23,8 +26,9 @@
         <th>CONFIRMED DELIVERY DATE</th>
         <th>REMAINING QUANTITY</th>
     </tr>
-
+    </thead>
     <c:forEach var="item" items="${fileContent}" >
+       <tbody>
         <tr>
             <td>${item.SUPPLIER}</td>
             <td>${item.CODE}</td>
@@ -37,6 +41,7 @@
 
         </tr>
     </c:forEach>
+       </tbody>
 </table>
 </body>
 </html>

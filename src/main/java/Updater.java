@@ -4,6 +4,7 @@ import com.fibaro.service.PurchaseOrdersDao;
 
 import java.sql.*;
 import java.util.Set;
+import java.util.SortedSet;
 
 public class Updater {
 	public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Updater {
 		)
 		{
 
-			Set<PurchaseOrders> purchaseOrdersSet = PurchaseOrdersDao.loadAllOrders(new Long(5557), conn);
+			SortedSet<PurchaseOrders> purchaseOrdersSet = PurchaseOrdersDao.loadAllOrders(new Long(5557));
 			purchaseOrdersSet.stream().forEach(System.out::println);
 
 		} catch (SQLException e) {

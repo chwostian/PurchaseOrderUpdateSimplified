@@ -11,9 +11,12 @@ import java.sql.SQLException;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 @Component
 public class PurchaseOrdersDao {
-    private static Set<PurchaseOrders> ordersSet = new HashSet<>();
+    private static SortedSet<PurchaseOrders> ordersSet = new TreeSet<>(PurchaseOrders::compareTo);
     private static final String SELECT_ALL_ORDERS = System.lineSeparator() +
             "Select" + System.lineSeparator() +
                 "pz.numer_zamowienia," + System.lineSeparator() +
@@ -38,9 +41,9 @@ public class PurchaseOrdersDao {
 
 
 
-    static public Set<PurchaseOrders> loadAllOrders(Long numer_kontrahenta, Connection conn) throws SQLException {
+    static public SortedSet<PurchaseOrders> loadAllOrders(Long numer_kontrahenta) throws SQLException {
         PreparedStatement preparedStatement;
-        preparedStatement = conn.prepareStatement(SELECT_ALL_ORDERS);
+        preparedStatement = DBConnector.getConnection().prepareStatement(SELECT_ALL_ORDERS);
         preparedStatement.setLong(1,numer_kontrahenta);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {

@@ -26,27 +26,33 @@ public class FileContentDao {
 
     public static SortedSet<FileContent> loadFileContent(MultipartFile file) throws IOException, ParseException {
         File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+file.getOriginalFilename());
-        file.transferTo(convFile);
-        Reader in = new FileReader(convFile);
 
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                .withHeader(FileHeaders.class)
-                .withDelimiter(';')
-                .withFirstRecordAsHeader()
-                .parse(in);
+        if (convFile.exists()) {
+            convFile.delete();
+        } else {
+            file.transferTo(convFile);
+            Reader in = new FileReader(convFile);
 
-        for (CSVRecord record : records) {
-            FileContent fileContent = new FileContent();
-            fileContent.setSUPPLIER(record.get(FileHeaders.SUPPLIER));
-            fileContent.setCODE(Long.valueOf(record.get(FileHeaders.CODE)));
-            fileContent.setPO(record.get(FileHeaders.PO));
-            fileContent.setLINE(Integer.valueOf(record.get(FileHeaders.LINE)));
-            fileContent.setSKU(record.get(FileHeaders.SKU));
-            fileContent.setCONFIRMED_DELIVERY_DATE(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
-            fileContent.setREMAINING_QUANTITY(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                    .withHeader(FileHeaders.class)
+                    .withDelimiter(';')
+                    .withFirstRecordAsHeader()
+                    .parse(in);
 
-            fileContentSet.add(fileContent);
-            System.out.println(fileContent.toString());
+            for (CSVRecord record : records) {
+                FileContent fileContent = new FileContent();
+                fileContent.setSUPPLIER(record.get(FileHeaders.SUPPLIER));
+                fileContent.setCODE(Long.valueOf(record.get(FileHeaders.CODE)));
+                fileContent.setPO(record.get(FileHeaders.PO));
+                fileContent.setLINE(Integer.valueOf(record.get(FileHeaders.LINE)));
+                fileContent.setSKU(record.get(FileHeaders.SKU));
+                fileContent.setCONFIRMED_DELIVERY_DATE(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
+                fileContent.setREMAINING_QUANTITY(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
+
+                fileContentSet.add(fileContent);
+                System.out.println(fileContent.toString());
+            }
+
         }
 
         return fileContentSet;

@@ -97,8 +97,8 @@ public class FileContent {
     }
     public int compareTo(FileContent f) {
         if (CODE.compareTo(f.CODE) == 0) {
-            if (SKU.compareTo(f.SKU) == 0) {
-                return CONFIRMED_DELIVERY_DATE.compareTo(f.CONFIRMED_DELIVERY_DATE);
-            } else { return SKU.compareTo(f.SKU);}
+            if (LINE.compareTo(f.LINE) == 0) {
+                return SKU.compareTo(f.SKU);
+            } else { return LINE.compareTo(f.LINE);}
         } else { return CODE.compareTo(f.CODE);}
 }}
