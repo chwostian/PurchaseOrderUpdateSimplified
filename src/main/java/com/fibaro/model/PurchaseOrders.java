@@ -1,10 +1,12 @@
 package com.fibaro.model;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 public class PurchaseOrders {
     private String numer_zamowienia;
-    private String numer_pozycji;
+    private Integer numer_pozycji;
     private String indeks_czesci;
     private String indeks;
     private String nazwa_czesci;
@@ -21,7 +23,7 @@ public class PurchaseOrders {
     public PurchaseOrders() {
     }
 
-    public PurchaseOrders(String numer_zamowienia, String numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, Date kl_termin, Date pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta, String nazwa_pelna) {
+    public PurchaseOrders(String numer_zamowienia, Integer numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, Date kl_termin, Date pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta, String nazwa_pelna) {
         this.numer_zamowienia = numer_zamowienia;
         this.numer_pozycji = numer_pozycji;
         this.indeks_czesci = indeks_czesci;
@@ -44,11 +46,11 @@ public class PurchaseOrders {
         this.numer_zamowienia = numer_zamowienia;
     }
 
-    public String getNumer_pozycji() {
+    public Integer getNumer_pozycji() {
         return numer_pozycji;
     }
 
-    public void setNumer_pozycji(String numer_pozycji) {
+    public void setNumer_pozycji(Integer numer_pozycji) {
         this.numer_pozycji = numer_pozycji;
     }
 
@@ -150,6 +152,22 @@ public class PurchaseOrders {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseOrders that = (PurchaseOrders) o;
+        return Objects.equals(getNumer_zamowienia(), that.getNumer_zamowienia()) &&
+                Objects.equals(getNumer_pozycji(), that.getNumer_pozycji()) &&
+                Objects.equals(getIndeks(), that.getIndeks()) &&
+                Objects.equals(getNumer_kontrahenta(), that.getNumer_kontrahenta());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumer_zamowienia(), getNumer_pozycji(), getIndeks(), getNumer_kontrahenta());
+    }
+
     public int compareTo(PurchaseOrders p) {
         if (numer_kontrahenta.compareTo(p.numer_kontrahenta) == 0) {
             if (numer_zamowienia.compareTo(p.numer_zamowienia) == 0) {
@@ -157,7 +175,7 @@ public class PurchaseOrders {
                     return indeks.compareTo(p.indeks);
                 }  else {return numer_pozycji.compareTo(p.numer_pozycji);}
             } else {return numer_zamowienia.compareTo(p.numer_zamowienia);}
-        } else { return numer_kontrahenta.compareTo(p.numer_kontrahenta);}
+        } else {return numer_kontrahenta.compareTo(p.numer_kontrahenta);}
 
     }
 }

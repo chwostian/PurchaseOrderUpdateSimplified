@@ -35,7 +35,8 @@ public class PurchaseOrdersDao {
                 "join zamowienia_zakupu zz on pz.numer_zamowienia = zz.numer_zamowienia and pz.id_firmy = zz.id_firmy" + System.lineSeparator() +
                 "left join v_kontrahenci vk on zz.numer_kontrahenta = vk.numer_kontrahenta and zz.id_firmy = vk.id_firmy" + System.lineSeparator() +
                 "join indeksy i on pz.indeks_czesci = i.indeks_czesci" + System.lineSeparator() +
-            "where zz.numer_kontrahenta = ? and pz.status_zamowienia = 'O' and pz.id_firmy = '1'";
+            "where zz.numer_kontrahenta = ? and pz.status_zamowienia = 'O' and pz.id_firmy = '1'" + System.lineSeparator() +
+            "order by zz.numer_kontrahenta, i.indeks, pr_termin";
 
 
 
@@ -51,7 +52,7 @@ public class PurchaseOrdersDao {
             purchaseOrders.setNumer_kontrahenta(resultSet.getLong("numer_kontrahenta"));
             purchaseOrders.setNazwa_pelna(resultSet.getString("nazwa_pelna"));
             purchaseOrders.setNumer_zamowienia(resultSet.getString("numer_zamowienia"));
-            purchaseOrders.setNumer_pozycji(resultSet.getString("numer_pozycji"));
+            purchaseOrders.setNumer_pozycji(resultSet.getInt("numer_pozycji"));
             purchaseOrders.setIndeks_czesci(resultSet.getString("indeks_czesci"));
             purchaseOrders.setIndeks(resultSet.getString("indeks"));
             purchaseOrders.setNazwa_czesci(resultSet.getString("nazwa_czesci"));

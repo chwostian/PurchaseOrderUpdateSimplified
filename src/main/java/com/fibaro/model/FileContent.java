@@ -1,104 +1,123 @@
 package com.fibaro.model;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Objects;
 
 
 public class FileContent {
-    private String SUPPLIER;
-    private Long CODE;
-    private String PO;
-    private Integer LINE;
-    private String SKU;
-    private LocalDate CONFIRMED_DELIVERY_DATE;
-    private Integer REMAINING_QUANTITY;
+    private String nazwa_pelna;
+    private Long numer_kontrahenta;
+    private String numer_zamowienia;
+    private Integer numer_pozycji;
+    private String indeks;
+    private LocalDate pr_termin;
+    private Integer ilosc_do_przyjecia;
 
-    public FileContent(String SUPPLIER, Long CODE, String PO, Integer LINE, String SKU, LocalDate CONFIRMED_DELIVERY_DATE, Integer REMAINING_QUANTITY) {
-        this.SUPPLIER = SUPPLIER;
-        this.CODE = CODE;
-        this.PO = PO;
-        this.LINE = LINE;
-        this.SKU = SKU;
-        this.CONFIRMED_DELIVERY_DATE = CONFIRMED_DELIVERY_DATE;
-        this.REMAINING_QUANTITY = REMAINING_QUANTITY;
+    public FileContent(String nazwa_pelna, Long numer_kontrahenta, String numer_zamowienia, Integer numer_pozycji, String indeks, LocalDate pr_termin, Integer ilosc_do_przyjecia) {
+        this.nazwa_pelna = nazwa_pelna;
+        this.numer_kontrahenta = numer_kontrahenta;
+        this.numer_zamowienia = numer_zamowienia;
+        this.numer_pozycji = numer_pozycji;
+        this.indeks = indeks;
+        this.pr_termin = pr_termin;
+        this.ilosc_do_przyjecia = ilosc_do_przyjecia;
     }
 
     public FileContent() {
     }
 
-    public String getSUPPLIER() {
-        return SUPPLIER;
+    public String getNazwa_pelna() {
+        return nazwa_pelna;
     }
 
-    public void setSUPPLIER(String SUPPLIER) {
-        this.SUPPLIER = SUPPLIER;
+    public void setNazwa_pelna(String nazwa_pelna) {
+        this.nazwa_pelna = nazwa_pelna;
     }
 
-    public Long getCODE() {
-        return CODE;
+    public Long getNumer_kontrahenta() {
+        return numer_kontrahenta;
     }
 
-    public void setCODE(Long CODE) {
-        this.CODE = CODE;
+    public void setNumer_kontrahenta(Long numer_kontrahenta) {
+        this.numer_kontrahenta = numer_kontrahenta;
     }
 
-    public String getPO() {
-        return PO;
+    public String getNumer_zamowienia() {
+        return numer_zamowienia;
     }
 
-    public void setPO(String PO) {
-        this.PO = PO;
+    public void setNumer_zamowienia(String numer_zamowienia) {
+        this.numer_zamowienia = numer_zamowienia;
     }
 
-    public Integer getLINE() {
-        return LINE;
+    public Integer getNumer_pozycji() {
+        return numer_pozycji;
     }
 
-    public void setLINE(Integer LINE) {
-        this.LINE = LINE;
+    public void setNumer_pozycji(Integer numer_pozycji) {
+        this.numer_pozycji = numer_pozycji;
     }
 
-    public String getSKU() {
-        return SKU;
+    public String getIndeks() {
+        return indeks;
     }
 
-    public void setSKU(String SKU) {
-        this.SKU = SKU;
+    public void setIndeks(String indeks) {
+        this.indeks = indeks;
     }
 
-    public LocalDate getCONFIRMED_DELIVERY_DATE() {
-        return CONFIRMED_DELIVERY_DATE;
+    public LocalDate getPr_termin() {
+        return pr_termin;
     }
 
-    public void setCONFIRMED_DELIVERY_DATE(LocalDate CONFIRMED_DELIVERY_DATE) {
-        this.CONFIRMED_DELIVERY_DATE = CONFIRMED_DELIVERY_DATE;
+    public void setPr_termin(LocalDate pr_termin) {
+        this.pr_termin = pr_termin;
     }
 
-    public Number getREMAINING_QUANTITY() {
-        return REMAINING_QUANTITY;
+    public Integer getIlosc_do_przyjecia() {
+        return ilosc_do_przyjecia;
     }
 
-    public void setREMAINING_QUANTITY(Integer REMAINING_QUANTITY) {
-        this.REMAINING_QUANTITY = REMAINING_QUANTITY;
+    public void setIlosc_do_przyjecia(Integer ilosc_do_przyjecia) {
+        this.ilosc_do_przyjecia = ilosc_do_przyjecia;
     }
 
     @Override
     public String toString() {
         return "FileContent{" +
-                "SUPPLIER='" + SUPPLIER + '\'' +
-                ", CODE=" + CODE +
-                ", PO='" + PO + '\'' +
-                ", LINE=" + LINE +
-                ", SKU='" + SKU + '\'' +
-                ", CONFIRMED_DELIVERY_DATE=" + CONFIRMED_DELIVERY_DATE +
-                ", REMAINING_QUANTITY=" + REMAINING_QUANTITY +
+                "nazwa_pelna='" + nazwa_pelna + '\'' +
+                ", numer_kontrahenta=" + numer_kontrahenta +
+                ", numer_zamowienia='" + numer_zamowienia + '\'' +
+                ", numer_pozycji=" + numer_pozycji +
+                ", indeks='" + indeks + '\'' +
+                ", pr_termin=" + pr_termin +
+                ", ilosc_do_przyjecia=" + ilosc_do_przyjecia +
                 '}';
     }
     public int compareTo(FileContent f) {
-        if (CODE.compareTo(f.CODE) == 0) {
-            if (LINE.compareTo(f.LINE) == 0) {
-                return SKU.compareTo(f.SKU);
-            } else { return LINE.compareTo(f.LINE);}
-        } else { return CODE.compareTo(f.CODE);}
-}}
+        if (numer_kontrahenta.compareTo(f.numer_kontrahenta) == 0) {
+            if (numer_zamowienia.compareTo(f.numer_zamowienia) == 0) {
+                if (numer_pozycji.compareTo(f.numer_pozycji) == 0)   {
+                    return indeks.compareTo(f.indeks);
+                }  else {return numer_pozycji.compareTo(f.numer_pozycji);}
+            } else {return numer_zamowienia.compareTo(f.numer_zamowienia);}
+        } else {return numer_kontrahenta.compareTo(f.numer_kontrahenta);}
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileContent that = (FileContent) o;
+        return
+                Objects.equals(this.getNumer_kontrahenta(), that.getNumer_kontrahenta()) &&
+                Objects.equals(getNumer_zamowienia(), that.getNumer_zamowienia()) &&
+                Objects.equals(getNumer_pozycji(), that.getNumer_pozycji()) &&
+                Objects.equals(getIndeks(), that.getIndeks());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumer_kontrahenta(), getNumer_zamowienia(), getNumer_pozycji());
+    }
+}

@@ -14,8 +14,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -41,13 +39,13 @@ public class FileContentDao {
 
             for (CSVRecord record : records) {
                 FileContent fileContent = new FileContent();
-                fileContent.setSUPPLIER(record.get(FileHeaders.SUPPLIER));
-                fileContent.setCODE(Long.valueOf(record.get(FileHeaders.CODE)));
-                fileContent.setPO(record.get(FileHeaders.PO));
-                fileContent.setLINE(Integer.valueOf(record.get(FileHeaders.LINE)));
-                fileContent.setSKU(record.get(FileHeaders.SKU));
-                fileContent.setCONFIRMED_DELIVERY_DATE(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
-                fileContent.setREMAINING_QUANTITY(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
+                fileContent.setNazwa_pelna(record.get(FileHeaders.SUPPLIER));
+                fileContent.setNumer_kontrahenta(Long.valueOf(record.get(FileHeaders.CODE)));
+                fileContent.setNumer_zamowienia(record.get(FileHeaders.PO));
+                fileContent.setNumer_pozycji(Integer.valueOf(record.get(FileHeaders.LINE)));
+                fileContent.setIndeks(record.get(FileHeaders.SKU));
+                fileContent.setPr_termin(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
+                fileContent.setIlosc_do_przyjecia(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
 
                 fileContentSet.add(fileContent);
                 System.out.println(fileContent.toString());

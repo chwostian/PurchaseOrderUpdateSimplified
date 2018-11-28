@@ -1,0 +1,52 @@
+#comparison {
+    font-family: "Calibri";
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: small;
+}
+
+#comparison td, #comparison th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: auto;
+}
+
+#comparison td {
+    text-align: right;
+}
+
+#comparison td#comment {
+    text-align: left;
+}
+
+#comparison input {
+    border: none;
+    font-family: "Calibri";
+    font-size: small;
+    text-align: center;
+
+}
+
+#comparison tr:nth-child(even){background-color: #f2f2f2;}
+
+#comparison tr:hover {background-color: #ddd;}
+#comparison th.sticky {
+    top:0;
+    position: sticky;
+    border: 1px solid white;
+}
+#comparison th.sticky2 {
+    top:44px;
+    position: sticky;
+    border: 1px solid white;
+}
+#comparison th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    font-size: larger;
+
+}
+
