@@ -14,6 +14,11 @@
 #comparison td {
     text-align: right;
 }
+
+#comparison i.glyphicon {
+    position: inherit;
+}
+
 #comparison i.glyphicon-remove {
     font-size: larger;
     color: red;
@@ -41,19 +46,26 @@
 
 }
 
-#comparison tr:nth-child(even){background-color: #f2f2f2;}
+#comparison tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
-#comparison tr:hover {background-color: #ddd;}
+#comparison tr:hover {
+    background-color: #ddd;
+}
+
 #comparison th.sticky {
-    top:0;
+    top: 0;
     position: sticky;
     border: 1px solid white;
 }
+
 #comparison th.sticky2 {
-    top:44px;
+    top: 44px;
     position: sticky;
     border: 1px solid white;
 }
+
 #comparison th {
     padding-top: 12px;
     padding-bottom: 12px;

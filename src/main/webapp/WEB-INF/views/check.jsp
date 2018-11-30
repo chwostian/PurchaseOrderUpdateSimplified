@@ -45,6 +45,16 @@
     </tr>
     </thead>
     <c:forEach var="item" items="${fullContent}" >
+
+    <fmt:parseDate  type="date" value="${item.kl_termin}" pattern="yyyy-MM-dd" var="parsed_kl_termin"  />
+    <fmt:parseDate  type="date" value="${item.termin_dostawcy}" pattern="yyyy-MM-dd" var="parsed_termin_dostawcy"  />
+    <fmt:parseDate  type="date" value="${item.pr_termin}" pattern="yyyy-MM-dd" var="parsed_pr_termin"  />
+    <fmt:formatNumber type="number" value="${item.ilosc_zlecona}"  groupingUsed="true" var="n_ilosc_zlecona"/>
+    <fmt:formatNumber type="number" value="${item.ilosc_do_przyjecia}"  groupingUsed="true" var="n_ilosc_do_przyjecia"/>
+    <fmt:formatNumber type="number" value="${item.ilosc_do_przyjecia_wg_dostawcy}"  groupingUsed="true" var="n_ilosc_do_przyjecia_wg_dostawcy"/>
+
+    <%System.out.println(request.getAttribute("parsed_pr_termin") + "/" + request.getAttribute("item.pr_termin"));%>
+
        <tbody>
         <tr>
             <td>${item.nazwa_pelna}</td>
@@ -54,15 +64,14 @@
             <td>${item.indeks}</td>
             <td contenteditable="true"><input type="date" value="${item.kl_termin}"/></td>
             <td contenteditable="true"><input type="date" value="${item.pr_termin}"/></td>
-            <td>${item.ilosc_zlecona}</td>
-            <td>${item.ilosc_do_przyjecia}</td>
-            <td><input type="date" value="${item.termin_dostawcy}"/></td>
-            <td>${item.ilosc_do_przyjecia_wg_dostawcy}</td>
+            <td>${n_ilosc_zlecona}</td>
+            <td>${n_ilosc_do_przyjecia}</td>
+            <td><input type="date" value="${item.termin_dostawcy}"/> </td>
+            <td>${n_ilosc_do_przyjecia_wg_dostawcy}</td>
             <td id="comment" contenteditable="true">${item.uwagi}</td>
 
-            <fmt:parseDate  type="date" value="${item.kl_termin}" pattern="yyyy-MM-dd" var="parsed_kl_termin"  />
-            <fmt:parseDate  type="date" value="${item.termin_dostawcy}" pattern="yyyy-MM-dd" var="parsed_termin_dostawcy"  />
-            <fmt:parseDate  type="date" value="${item.pr_termin}" pattern="yyyy-MM-dd" var="parsed_pr_termin"  />
+
+
             <c:choose>
                 <c:when test="${((parsed_kl_termin eq parsed_termin_dostawcy) && (not empty parsed_pr_termin) && (not empty parsed_termin_dostawcy)) || (parsed_termin_dostawcy eq parsed_pr_termin)}"><td class="center"><i class="glyphicon glyphicon-ok"/></td></c:when>
                 <c:otherwise><td class="center"><i class="glyphicon glyphicon-remove"/></td></c:otherwise>

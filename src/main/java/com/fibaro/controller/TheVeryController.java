@@ -16,9 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Predicate;
 
 @Controller
@@ -39,7 +37,7 @@ public class TheVeryController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String submit(@RequestParam("file") MultipartFile file, Model model) throws IOException, ParseException, SQLException {
         SortedSet<FileContent> fileContentSet = fileContentDao.loadFileContent(file);
-
+        System.out.println(fileContentSet.size());
         SortedSet<PurchaseOrders> purchaseOrdersSortedSet = purchaseOrdersDao.loadAllOrders(fileContentSet.first().getNumer_kontrahenta());
         SortedSet<FullContent> fullContentSortedSet = new TreeSet<>(FullContent::compareTo);
         /*Upewnijmy się, że kombinacja numer zamówienia, pozycji, numer kontrahenta i indeks jest unikalna. Musi być bez powtórzeń */
@@ -91,9 +89,9 @@ public class TheVeryController {
 
         }
 
-
-
-        model.addAttribute("fullContent", fullContentSortedSet);
+        List<FullContent> list = new ArrayList<>();
+        list.addAll(fullContentSortedSet);
+        model.addAttribute("fullContent", list);
 
         return "check";
     }

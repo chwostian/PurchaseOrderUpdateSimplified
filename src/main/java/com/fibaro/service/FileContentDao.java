@@ -23,36 +23,39 @@ public class FileContentDao {
     private MultipartFile file;
 
     public static SortedSet<FileContent> loadFileContent(MultipartFile file) throws IOException, ParseException {
-        File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+file.getOriginalFilename());
+//        File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename());
+        File convFile = File.createTempFile("import",null);
 
-        if (convFile.exists()) {
-            convFile.delete();
-        } else {
-            file.transferTo(convFile);
-            Reader in = new FileReader(convFile);
+//        if (convFile.exists()) {
+//            convFile.delete();
+//        }
+        file.transferTo(convFile);
+        Reader in = new FileReader(convFile);
 
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    .withHeader(FileHeaders.class)
-                    .withDelimiter(';')
-                    .withFirstRecordAsHeader()
-                    .parse(in);
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                .withHeader(FileHeaders.class)
+                .withDelimiter(';')
+                .withFirstRecordAsHeader()
+                .parse(in);
 
-            for (CSVRecord record : records) {
-                FileContent fileContent = new FileContent();
-                fileContent.setNazwa_pelna(record.get(FileHeaders.SUPPLIER));
-                fileContent.setNumer_kontrahenta(Long.valueOf(record.get(FileHeaders.CODE)));
-                fileContent.setNumer_zamowienia(record.get(FileHeaders.PO));
-                fileContent.setNumer_pozycji(Integer.valueOf(record.get(FileHeaders.LINE)));
-                fileContent.setIndeks(record.get(FileHeaders.SKU));
-                fileContent.setPr_termin(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
-                fileContent.setIlosc_do_przyjecia(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
 
-                fileContentSet.add(fileContent);
-                System.out.println(fileContent.toString());
-            }
 
+        for (CSVRecord record : records) {
+            FileContent fileContent = new FileContent();
+            fileContent.setNazwa_pelna(record.get(FileHeaders.SUPPLIER));
+            fileContent.setNumer_kontrahenta(Long.valueOf(record.get(FileHeaders.CODE)));
+            fileContent.setNumer_zamowienia(record.get(FileHeaders.PO));
+            fileContent.setNumer_pozycji(Integer.valueOf(record.get(FileHeaders.LINE)));
+            fileContent.setIndeks(record.get(FileHeaders.SKU));
+            fileContent.setPr_termin(LocalDate.parse(record.get(FileHeaders.CONFIRMED_DELIVERY_DATE)));
+            fileContent.setIlosc_do_przyjecia(Integer.valueOf(record.get(FileHeaders.REMAINING_QUANTITY)));
+
+            fileContentSet.add(fileContent);
+            System.out.println(fileContent.toString());
         }
 
+        in.close();
+        convFile.delete();
         return fileContentSet;
     }
 }

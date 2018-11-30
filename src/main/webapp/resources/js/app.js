@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $("td").click(function() {
-
-            alert($(this).innerHTML);
+            console.log($(this));
+            // alert($(this).innerHTML);
     });
 })
