@@ -14,9 +14,23 @@
 #comparison td {
     text-align: right;
 }
+#comparison i.glyphicon-remove {
+    font-size: larger;
+    color: red;
+}
+
+#comparison i.glyphicon-ok {
+    font-size: larger;
+    color: green;
+
+}
 
 #comparison td#comment {
     text-align: left;
+}
+
+#comparison .center {
+    text-align: center;
 }
 
 #comparison input {

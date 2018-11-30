@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -15,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="resources/css2.css"/>
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 <div><h2>Submitted File</h2></div>
@@ -25,6 +27,8 @@
         <th class="sticky" colspan="4">Fibaro data</th>
         <th class="sticky" colspan="2">Supplier data</th>
         <th class="sticky" rowspan="2">Comment</th>
+        <th class="sticky" rowspan="2">Dates match?</th>
+        <th class="sticky" rowspan="2">Remaining<br>quantities<br></th>
     </tr>
     <tr>
         <th class="sticky2">Supplier</th>
@@ -55,19 +59,25 @@
             <td><input type="date" value="${item.termin_dostawcy}"/></td>
             <td>${item.ilosc_do_przyjecia_wg_dostawcy}</td>
             <td id="comment" contenteditable="true">${item.uwagi}</td>
-            <fmt:formatDate type="date" value="${item.kl_termin}" pattern="yyyy-MM-dd" var="Date1" />
-            <fmt:formatDate type="date" value="${item.termin_dostawcy}" pattern="yyyy-MM-dd" var="Date2" />
+
+            <fmt:parseDate  type="date" value="${item.kl_termin}" pattern="yyyy-MM-dd" var="parsed_kl_termin"  />
+            <fmt:parseDate  type="date" value="${item.termin_dostawcy}" pattern="yyyy-MM-dd" var="parsed_termin_dostawcy"  />
+            <fmt:parseDate  type="date" value="${item.pr_termin}" pattern="yyyy-MM-dd" var="parsed_pr_termin"  />
             <c:choose>
-                <c:when test="${Date1 eq Date2}">
-                    <td class="fas fa-thumbs-up">${Date1 eq Date2} oraz ${Date1} oraz ${Date2}</td>
-                </c:when>
-                <c:otherwise><td class="fas fa-thumbs-down">${Date1 eq Date2}</td></c:otherwise>
+                <c:when test="${((parsed_kl_termin eq parsed_termin_dostawcy) && (not empty parsed_pr_termin) && (not empty parsed_termin_dostawcy)) || (parsed_termin_dostawcy eq parsed_pr_termin)}"><td class="center"><i class="glyphicon glyphicon-ok"/></td></c:when>
+                <c:otherwise><td class="center"><i class="glyphicon glyphicon-remove"/></td></c:otherwise>
+            </c:choose>
+
+            <c:choose>
+                <c:when test="${item.ilosc_zlecona eq item.ilosc_do_przyjecia_wg_dostawcy}"><td class="center"><i class="glyphicon glyphicon-ok"/></td></c:when>
+                <c:otherwise><td class="center"><i class="glyphicon glyphicon-remove"/></td></c:otherwise>
             </c:choose>
         </tr>
     </c:forEach>
        </tbody>
 </table>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/app.js"></script>
 </body>
 </html>
