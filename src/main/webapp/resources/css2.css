@@ -9,10 +9,27 @@
     border: 1px solid #ddd;
     padding: 8px;
     width: auto;
+
+}
+
+#comparison textarea {
+    display: block;
+    background-color: inherit;
+    border: none;
+    overflow: hidden;
+    outline: none;
+    box-sizing: content-box;
+    height: auto;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+
 }
 
 #comparison td {
     text-align: right;
+
 }
 
 #comparison i.glyphicon {
@@ -43,15 +60,18 @@
     font-family: "Calibri";
     font-size: small;
     text-align: center;
+    background-color: inherit;
 
 }
 
 #comparison tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #2196F3;
+
 }
 
 #comparison tr:hover {
-    background-color: #ddd;
+    background-color: #dddddd;
+    border-color: #555555;
 }
 
 #comparison th.sticky {
@@ -73,6 +93,9 @@
     color: white;
     text-align: center;
     font-size: larger;
-
 }
+.hide_or_show {
+    display:none;
+}
+
 
