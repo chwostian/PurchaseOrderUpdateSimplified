@@ -18,6 +18,8 @@ public class FullContentDao {
   private MultipartFile file;
 
  public static List<FullContent> fullContentSortedSet(MultipartFile file) throws IOException, ParseException, SQLException {
+    Boolean daty_sie_zgadzaja;
+    Boolean ilosci_sie_zgadzaja;
     SortedSet<FileContent> fileContentSet = FileContentDao.loadFileContent(file);
     SortedSet<FullContent> fullContentSortedSet = new TreeSet<>(FullContent::compareTo);
     SortedSet<PurchaseOrders> purchaseOrdersSortedSet = PurchaseOrdersDao.loadAllOrders(fileContentSet.first().getNumer_kontrahenta());
@@ -66,6 +68,22 @@ public class FullContentDao {
         fullyFullContent.setUwagi(p.getUwagi());
       }
 
+      if (fullyFullContent.getPr_termin() == null || fullyFullContent.getTermin_dostawcy() == null ) {
+          daty_sie_zgadzaja = false;
+
+      } else {
+          daty_sie_zgadzaja = fullyFullContent.getPr_termin().equals(fullyFullContent.getTermin_dostawcy()) ? true : false;
+          }
+
+      if (fullyFullContent.getIlosc_do_przyjecia() == null || fullyFullContent.getIlosc_do_przyjecia_wg_dostawcy() == null) {
+          ilosci_sie_zgadzaja = false;
+      } else {
+          ilosci_sie_zgadzaja = fullyFullContent.getIlosc_do_przyjecia().equals(fullyFullContent.getIlosc_do_przyjecia_wg_dostawcy()) ? true : false;
+      }
+
+
+      fullyFullContent.setDaty_sie_zgadzaja(daty_sie_zgadzaja);
+      fullyFullContent.setIlosci_sie_zgadzaja(ilosci_sie_zgadzaja);
 
     }
     List<FullContent> list = new ArrayList<>();

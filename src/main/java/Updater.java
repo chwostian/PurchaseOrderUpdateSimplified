@@ -26,7 +26,7 @@ public class Updater {
 	    }
 		try (
 
-				Connection conn = DBConnector.getConnection();
+				Connection conn = DBConnector.getConnection("raporty", "raporty");
 		)
 		{
 

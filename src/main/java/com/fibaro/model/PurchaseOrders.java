@@ -10,8 +10,8 @@ public class PurchaseOrders {
     private String indeks_czesci;
     private String indeks;
     private String nazwa_czesci;
-    private Date kl_termin;
-    private Date pr_termin;
+    private LocalDate kl_termin;
+    private LocalDate pr_termin;
     private Integer ilosc_zlecona;
     private Integer ilosc_do_przyjecia;
     private String uwagi;
@@ -23,7 +23,7 @@ public class PurchaseOrders {
     public PurchaseOrders() {
     }
 
-    public PurchaseOrders(String numer_zamowienia, Integer numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, Date kl_termin, Date pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta, String nazwa_pelna) {
+    public PurchaseOrders(String numer_zamowienia, Integer numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, LocalDate kl_termin, LocalDate pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta, String nazwa_pelna) {
         this.numer_zamowienia = numer_zamowienia;
         this.numer_pozycji = numer_pozycji;
         this.indeks_czesci = indeks_czesci;
@@ -78,19 +78,19 @@ public class PurchaseOrders {
         this.nazwa_czesci = nazwa_czesci;
     }
 
-    public Date getKl_termin() {
+    public LocalDate getKl_termin() {
         return kl_termin;
     }
 
-    public void setKl_termin(Date kl_termin) {
+    public void setKl_termin(LocalDate kl_termin) {
         this.kl_termin = kl_termin;
     }
 
-    public Date getPr_termin() {
+    public LocalDate getPr_termin() {
         return pr_termin;
     }
 
-    public void setPr_termin(Date pr_termin) {
+    public void setPr_termin(LocalDate pr_termin) {
         this.pr_termin = pr_termin;
     }
 

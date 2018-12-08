@@ -89,7 +89,7 @@
 
 
             <c:choose>
-                <c:when test="${((parsed_kl_termin eq parsed_termin_dostawcy) && (not empty parsed_pr_termin) && (not empty parsed_termin_dostawcy)) || (parsed_termin_dostawcy eq parsed_pr_termin)}">
+                <c:when test="${item.daty_sie_zgadzaja==true}">
                     <td class="center"><i class="glyphicon glyphicon-ok"/></td>
                 </c:when>
                 <c:otherwise>
@@ -98,7 +98,7 @@
             </c:choose>
 
             <c:choose>
-                <c:when test="${item.ilosc_zlecona eq item.ilosc_do_przyjecia_wg_dostawcy}">
+                <c:when test="${item.ilosci_sie_zgadzaja==true}">
                     <td class="center"><i class="glyphicon glyphicon-ok"/></td>
                 </c:when>
                 <c:otherwise>

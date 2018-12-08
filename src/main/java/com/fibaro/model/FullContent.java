@@ -13,13 +13,31 @@ public class FullContent {
     private String nazwa_czesci;
     private LocalDate termin_dostawcy;
     private Integer ilosc_do_przyjecia_wg_dostawcy;
-    private Date kl_termin;
-    private Date pr_termin;
+    private LocalDate kl_termin;
+    private LocalDate pr_termin;
     private Integer ilosc_zlecona;
     private Integer ilosc_do_przyjecia;
     private String uwagi;
     private Long numer_kontrahenta;
     private String nazwa_pelna;
+    private Boolean daty_sie_zgadzaja;
+    private Boolean ilosci_sie_zgadzaja;
+
+    public Boolean getDaty_sie_zgadzaja() {
+        return daty_sie_zgadzaja;
+    }
+
+    public void setDaty_sie_zgadzaja(Boolean daty_sie_zgadzaja) {
+        this.daty_sie_zgadzaja = daty_sie_zgadzaja;
+    }
+
+    public Boolean getIlosci_sie_zgadzaja() {
+        return ilosci_sie_zgadzaja;
+    }
+
+    public void setIlosci_sie_zgadzaja(Boolean ilosci_sie_zgadzaja) {
+        this.ilosci_sie_zgadzaja = ilosci_sie_zgadzaja;
+    }
 
     public FullContent() {
     }
@@ -80,19 +98,19 @@ public class FullContent {
         this.ilosc_do_przyjecia_wg_dostawcy = ilosc_do_przyjecia_wg_dostawcy;
     }
 
-    public Date getKl_termin() {
+    public LocalDate getKl_termin() {
         return kl_termin;
     }
 
-    public void setKl_termin(Date kl_termin) {
+    public void setKl_termin(LocalDate kl_termin) {
         this.kl_termin = kl_termin;
     }
 
-    public Date getPr_termin() {
+    public LocalDate getPr_termin() {
         return pr_termin;
     }
 
-    public void setPr_termin(Date pr_termin) {
+    public void setPr_termin(LocalDate pr_termin) {
         this.pr_termin = pr_termin;
     }
 

@@ -1,14 +1,18 @@
 package com.fibaro.service;
 
 import com.fibaro.model.PurchaseOrders;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -43,10 +47,14 @@ public class PurchaseOrdersDao {
 
 
     static public SortedSet<PurchaseOrders> loadAllOrders(Long numer_kontrahenta) throws SQLException {
+
+        Connection conn = DBConnector.getConnection("raporty","raporty");
         PreparedStatement preparedStatement;
-        preparedStatement = DBConnector.getConnection().prepareStatement(SELECT_ALL_ORDERS);
+        preparedStatement = conn.prepareStatement(SELECT_ALL_ORDERS);
         preparedStatement.setLong(1,numer_kontrahenta);
         ResultSet resultSet = preparedStatement.executeQuery();
+        LocalDate kl_termin;
+        LocalDate pr_termin;
         while (resultSet.next()) {
             PurchaseOrders purchaseOrders = new PurchaseOrders();
             purchaseOrders.setNumer_kontrahenta(resultSet.getLong("numer_kontrahenta"));
@@ -56,12 +64,19 @@ public class PurchaseOrdersDao {
             purchaseOrders.setIndeks_czesci(resultSet.getString("indeks_czesci"));
             purchaseOrders.setIndeks(resultSet.getString("indeks"));
             purchaseOrders.setNazwa_czesci(resultSet.getString("nazwa_czesci"));
-            purchaseOrders.setKl_termin(resultSet.getDate("kl_termin"));
-            purchaseOrders.setPr_termin(resultSet.getDate("pr_termin"));
+
+            kl_termin = resultSet.getDate("kl_termin") == null ? null: resultSet.getDate("kl_termin").toLocalDate();
+            pr_termin = resultSet.getDate("pr_termin") == null ? null : resultSet.getDate("pr_termin").toLocalDate();
+
+            if (kl_termin == null) {
+                purchaseOrders.setKl_termin(null);
+            }
+            purchaseOrders.setKl_termin(kl_termin);
+            purchaseOrders.setPr_termin(pr_termin);
             purchaseOrders.setIlosc_zlecona(resultSet.getInt("ilosc_zlecona"));
             purchaseOrders.setIlosc_do_przyjecia(resultSet.getInt("ilosc_do_przyjecia"));
             purchaseOrders.setUwagi(resultSet.getString("uwagi"));
             ordersSet.add(purchaseOrders);}
-
+            conn.close();
         return ordersSet;}
 }
