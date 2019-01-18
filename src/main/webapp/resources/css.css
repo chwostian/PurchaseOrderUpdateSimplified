@@ -16,6 +16,7 @@ nav {
     padding: 5px;
     color: white;}
 
+
 .input-container {
     display: flex;
     width: 100%;
@@ -56,3 +57,82 @@ nav {
 .btn:hover {
     opacity: 1;
 }
+
+.hide_or_show {
+    display: none;
+}
+
+.sql-exception {
+    display: block;
+    align: center;
+    color: red;
+    font-weight: bold;
+
+}
+
+#upload {
+
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align: center;
+    width: 50%;
+    height: 250px;
+    border: 3px solid #2196F3;
+    margin: auto;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom:none;
+    cursor: pointer;
+}
+
+#upload input {
+
+    display: none;
+
+}
+
+#upload div {
+    margin: auto;
+}
+
+#upload i {
+    /*margin: auto;*/
+    font-size: 144px;
+}
+
+.submit {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    height: 50px;
+    margin: auto;
+    background-color:#2196F3;
+    border-radius: 0px 0px 10px 10px;
+    cursor: pointer;
+    opacity: 1;
+    color: white;
+
+
+}
+
+.submit:hover {
+  opacity: 0.9;
+    color: black;
+}
+
+.submit input {
+    display:none;
+}
+div span {
+    text-align: center;
+}
+
+.btn2 {
+    border-top:none;
+    .border-radius: 0px 0px 10px 10px;
+}
+
+
+

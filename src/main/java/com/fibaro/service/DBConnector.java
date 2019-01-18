@@ -12,8 +12,11 @@ public class DBConnector {
 
 
     public static Connection getConnection(String user, String password) throws SQLException {
-
-        Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.50.173:1521:bpsc",user,password);
-                return conn;
+        try  {
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.50.173:1521:bpsc", user, password);
+            return conn;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

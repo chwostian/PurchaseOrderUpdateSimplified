@@ -1,8 +1,11 @@
 #comparison {
     font-family: "Calibri";
     border-collapse: collapse;
-    table-layout: fixed;
-    font-size: small;
+    table-layout: auto;
+    font-size: smaller;
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
 }
 
 #comparison td, #comparison th {
@@ -47,8 +50,13 @@
 
 }
 
-#comparison td#comment {
+#comparison td.comment {
     text-align: left;
+}
+
+#comparison td.description {
+    text-align: left;
+    /*white-space: nowrap;*/
 }
 
 #comparison .center {
@@ -75,13 +83,30 @@
 }
 
 #comparison th.sticky {
-    top: 0;
+    top: 0px;
+    position: sticky;
+    border: 1px solid white;
+    border-radius:15px;
+    background-color: darkorange;
+    color: black;
+    cursor: pointer;
+ }
+#comparison th.sticky0 {
+    top: 0px;
+    position: sticky;
+    border: 1px solid white;
+    border-radius:15px;
+    background-color: #2196F3;
+    cursor: pointer;
+}
+#comparison th.sticky1, th.sticky3 {
+    top: 50px;
     position: sticky;
     border: 1px solid white;
 }
 
 #comparison th.sticky2 {
-    top: 44px;
+    top: 94px;
     position: sticky;
     border: 1px solid white;
 }
@@ -97,5 +122,12 @@
 .hide_or_show {
     display:none;
 }
+
+
+#comparison th.sticky:hover, #comparison th.sticky0:hover {
+    background-color: green;
+}
+
+
 
 

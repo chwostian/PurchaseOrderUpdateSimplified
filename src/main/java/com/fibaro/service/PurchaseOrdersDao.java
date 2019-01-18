@@ -5,22 +5,18 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 @Component
 public class PurchaseOrdersDao {
-    private static SortedSet<PurchaseOrders> ordersSet = new TreeSet<>(PurchaseOrders::compareTo);
+
     private static final String SELECT_ALL_ORDERS = System.lineSeparator() +
             "Select" + System.lineSeparator() +
                 "pz.numer_zamowienia," + System.lineSeparator() +
@@ -46,9 +42,9 @@ public class PurchaseOrdersDao {
 
 
 
-    static public SortedSet<PurchaseOrders> loadAllOrders(Long numer_kontrahenta) throws SQLException {
+    static public SortedSet<PurchaseOrders> loadAllOrders(Long numer_kontrahenta, Connection conn) throws SQLException {
+        SortedSet<PurchaseOrders> ordersSet = new TreeSet<>(PurchaseOrders::compareTo);
 
-        Connection conn = DBConnector.getConnection("raporty","raporty");
         PreparedStatement preparedStatement;
         preparedStatement = conn.prepareStatement(SELECT_ALL_ORDERS);
         preparedStatement.setLong(1,numer_kontrahenta);
@@ -58,12 +54,10 @@ public class PurchaseOrdersDao {
         while (resultSet.next()) {
             PurchaseOrders purchaseOrders = new PurchaseOrders();
             purchaseOrders.setNumer_kontrahenta(resultSet.getLong("numer_kontrahenta"));
-            purchaseOrders.setNazwa_pelna(resultSet.getString("nazwa_pelna"));
             purchaseOrders.setNumer_zamowienia(resultSet.getString("numer_zamowienia"));
             purchaseOrders.setNumer_pozycji(resultSet.getInt("numer_pozycji"));
             purchaseOrders.setIndeks_czesci(resultSet.getString("indeks_czesci"));
             purchaseOrders.setIndeks(resultSet.getString("indeks"));
-            purchaseOrders.setNazwa_czesci(resultSet.getString("nazwa_czesci"));
 
             kl_termin = resultSet.getDate("kl_termin") == null ? null: resultSet.getDate("kl_termin").toLocalDate();
             pr_termin = resultSet.getDate("pr_termin") == null ? null : resultSet.getDate("pr_termin").toLocalDate();
@@ -77,6 +71,6 @@ public class PurchaseOrdersDao {
             purchaseOrders.setIlosc_do_przyjecia(resultSet.getInt("ilosc_do_przyjecia"));
             purchaseOrders.setUwagi(resultSet.getString("uwagi"));
             ordersSet.add(purchaseOrders);}
-            conn.close();
+
         return ordersSet;}
 }

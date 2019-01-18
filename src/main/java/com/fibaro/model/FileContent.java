@@ -1,20 +1,21 @@
 package com.fibaro.model;
 
+import javax.validation.constraints.Null;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 
 public class FileContent {
-    private String nazwa_pelna;
     private Long numer_kontrahenta;
     private String numer_zamowienia;
     private Integer numer_pozycji;
     private String indeks;
+    @Null
     private LocalDate pr_termin;
     private Integer ilosc_do_przyjecia;
 
-    public FileContent(String nazwa_pelna, Long numer_kontrahenta, String numer_zamowienia, Integer numer_pozycji, String indeks, LocalDate pr_termin, Integer ilosc_do_przyjecia) {
-        this.nazwa_pelna = nazwa_pelna;
+    public FileContent(Long numer_kontrahenta, String numer_zamowienia, Integer numer_pozycji, String indeks, LocalDate pr_termin, Integer ilosc_do_przyjecia) {
         this.numer_kontrahenta = numer_kontrahenta;
         this.numer_zamowienia = numer_zamowienia;
         this.numer_pozycji = numer_pozycji;
@@ -26,13 +27,6 @@ public class FileContent {
     public FileContent() {
     }
 
-    public String getNazwa_pelna() {
-        return nazwa_pelna;
-    }
-
-    public void setNazwa_pelna(String nazwa_pelna) {
-        this.nazwa_pelna = nazwa_pelna;
-    }
 
     public Long getNumer_kontrahenta() {
         return numer_kontrahenta;
@@ -84,9 +78,7 @@ public class FileContent {
 
     @Override
     public String toString() {
-        return "FileContent{" +
-                "nazwa_pelna='" + nazwa_pelna + '\'' +
-                ", numer_kontrahenta=" + numer_kontrahenta +
+        return "FileContent{" +" numer_kontrahenta=" + numer_kontrahenta +
                 ", numer_zamowienia='" + numer_zamowienia + '\'' +
                 ", numer_pozycji=" + numer_pozycji +
                 ", indeks='" + indeks + '\'' +

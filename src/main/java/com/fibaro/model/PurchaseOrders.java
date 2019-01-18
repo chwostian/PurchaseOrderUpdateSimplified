@@ -16,14 +16,13 @@ public class PurchaseOrders {
     private Integer ilosc_do_przyjecia;
     private String uwagi;
     private Long numer_kontrahenta;
-    private String nazwa_pelna;
 
 
 
     public PurchaseOrders() {
     }
 
-    public PurchaseOrders(String numer_zamowienia, Integer numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, LocalDate kl_termin, LocalDate pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta, String nazwa_pelna) {
+    public PurchaseOrders(String numer_zamowienia, Integer numer_pozycji, String indeks_czesci, String indeks, String nazwa_czesci, LocalDate kl_termin, LocalDate pr_termin, Integer ilosc_zlecona, Integer ilosc_do_przyjecia, String uwagi, Long numer_kontrahenta) {
         this.numer_zamowienia = numer_zamowienia;
         this.numer_pozycji = numer_pozycji;
         this.indeks_czesci = indeks_czesci;
@@ -35,7 +34,6 @@ public class PurchaseOrders {
         this.ilosc_do_przyjecia = ilosc_do_przyjecia;
         this.uwagi = uwagi;
         this.numer_kontrahenta = numer_kontrahenta;
-        this.nazwa_pelna = nazwa_pelna;
     }
 
     public String getNumer_zamowienia() {
@@ -126,13 +124,6 @@ public class PurchaseOrders {
         this.numer_kontrahenta = numer_kontrahenta;
     }
 
-    public String getNazwa_pelna() {
-        return nazwa_pelna;
-    }
-
-    public void setNazwa_pelna(String nazwa_pelna) {
-        this.nazwa_pelna = nazwa_pelna;
-    }
 
     @Override
     public String toString() {
@@ -141,14 +132,13 @@ public class PurchaseOrders {
                 ", numer_pozycji='" + numer_pozycji + '\'' +
                 ", indeks_czesci='" + indeks_czesci + '\'' +
                 ", indeks='" + indeks + '\'' +
-                ", nazwa_czesci='" + nazwa_czesci + '\'' +
                 ", kl_termin=" + kl_termin +
                 ", pr_termin=" + pr_termin +
                 ", ilosc_zlecona=" + ilosc_zlecona +
                 ", ilosc_do_przyjecia=" + ilosc_do_przyjecia +
                 ", uwagi='" + uwagi + '\'' +
                 ", numer_kontrahenta=" + numer_kontrahenta +
-                ", nazwa_pelna='" + nazwa_pelna + '\'' +
+
                 '}';
     }
 

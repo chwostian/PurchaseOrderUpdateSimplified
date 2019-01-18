@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css.css"/>
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css'
           integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
@@ -20,9 +21,9 @@
     <div>PurchaseOrdersUpdaterSimplified</div>
 </nav>
 
-
-<form method="POST" action="createSessionAttributes" style="max-width:500px;margin:auto">
+<form class = "container hide_or_show" data-hidden ="${hide_or_show}" method="POST" action="createSessionAttributes" style="max-width:500px;margin:auto">
     <h2>Logowanie</h2>
+    <h6 class="sql-exception">${sqlException}</h6>
     <div class="input-container">
         <i class="fa fa-user icon"></i>
         <input class="input-field" type="text" placeholder="Użytkownik Impuls" name="user">
@@ -37,17 +38,21 @@
 </form>
 
 
-<form method="POST" action="uploadFile" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td>Select a file to upload</td>
-            <td><input type="file" name="file"  accept=".csv"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" /></td>
-        </tr>
-    </table>
+
+<form class="" id="uploader" method="POST" data-hidden="${!hide_or_show}" action="uploadFile" enctype="multipart/form-data">
+
+
+    <div id="upload">
+        <br><span> Choose a file to upload for analysis </span>
+            <input id="fileToUpload" type="file" name="file"  accept=".csv, .xlsx"/>
+            <div><i class="fa fa-cloud-upload"></i></div>
+
+    </div>
+    <div class="submit"><input type="submit"/>Upload</div>
+
 </form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/home.js"></script>
 </body>
 </html>
