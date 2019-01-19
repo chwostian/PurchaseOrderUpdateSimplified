@@ -38,7 +38,7 @@ $(document).ready(function(){
                 method: "PUT",
                 url: "update",
                 dataType: "JSON",
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/json",
                 data: JSON.stringify(data)
             })
                 .done(function( msg ) {

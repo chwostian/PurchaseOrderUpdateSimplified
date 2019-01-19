@@ -7,6 +7,7 @@ import com.fibaro.service.FullContentDao;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -102,8 +103,8 @@ public class TheVeryController {
             return "home";
     }
 
-    @RequestMapping(value="/update", method=RequestMethod.PUT)
-    public String updatePurchaseOrders(@RequestBody List<PurchaseOrders> data, HttpServletRequest request, Model model) {
+    @RequestMapping(value="/update", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String updatePurchaseOrders(@RequestBody List<PurchaseOrders> data, HttpServletRequest request, Model model) {
         return null;
     }
 
