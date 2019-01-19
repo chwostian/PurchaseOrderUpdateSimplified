@@ -51,7 +51,7 @@
     <div class="submit"><input type="submit"/>Upload</div>
 
 </form>
-
+<button id="lipnyLink">Lipny Link</button><br>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/home.js"></script>
 </body>

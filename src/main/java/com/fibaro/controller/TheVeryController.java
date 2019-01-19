@@ -1,7 +1,9 @@
 package com.fibaro.controller;
 
+import com.fibaro.model.DataContainerDto;
 import com.fibaro.model.FullContent;
 import com.fibaro.model.PurchaseOrders;
+import com.fibaro.model.PurchaseOrdersDTO;
 import com.fibaro.service.DBConnector;
 import com.fibaro.service.FullContentDao;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -103,8 +105,9 @@ public class TheVeryController {
             return "home";
     }
 
-    @RequestMapping(value="/update", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String updatePurchaseOrders(@RequestBody List<PurchaseOrders> data, HttpServletRequest request, Model model) {
+    @RequestMapping(value="/update", method=RequestMethod.POST)
+    @ResponseBody
+    public String updatePurchaseOrders(@RequestBody DataContainerDto dataContainerDto) {
         return null;
     }
 

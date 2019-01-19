@@ -6,7 +6,6 @@ $(document).ready(function(){
         e.stopPropagation();
         $("#fileToUpload").trigger('click');
     })
-
     $("#fileToUpload").on('click', function(e) {
         e.stopPropagation();
     })
@@ -16,4 +15,30 @@ $(document).ready(function(){
         $("#uploader").submit();
     })
 
+    $("#lipnyLink").on("click", function(e) {
+        e.stopPropagation();
+        var dataContainer = {
+            data: []
+        };
+
+        dataContainer.data.push({
+            name: 'Joe',
+            age: 33
+        });
+
+        dataContainer.data.push({
+            name: 'Mary',
+            age: 18
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "update",
+            contentType: "application/json",
+            data: JSON.stringify(dataContainer)
+        })
+            .done(function( msg ) {
+                alert( "Data Saved: " + msg );
+            });
+    })
 })

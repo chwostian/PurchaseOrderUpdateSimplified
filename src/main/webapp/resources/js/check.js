@@ -15,7 +15,7 @@ $(document).ready(function(){
         var vRows = $("[data-hidden=false]");
         if (vRows.length > 0) {
             var data = [];
-
+            var purchaseOrdersList = { data:[]}
             vRows.each(function(index, element) {
               var  purchaseOrders= {
                   indeks_czesci: $(this).data("indeks_czesci").toString(),
@@ -26,20 +26,33 @@ $(document).ready(function(){
                   numer_pozycji:$(this).data("numer_pozycji"),
                   kl_termin: $(this).find("[contenteditable=true]").eq(0).val(),
                   pr_termin:$(this).find("[contenteditable=true]").eq(1).val(),
-                  ilosc_zlecona:$(this).find("[contenteditable=true]").eq(2).val(),
-                  ilosc_do_przyjecia: $(this).find("[n_ilosc_do_przyjecia]"),
+                  ilosc_zlecona:parseInt($(this).find("[contenteditable=true]").eq(2).val(),10),
+                  ilosc_do_przyjecia: parseInt($(this).find("[n_ilosc_do_przyjecia]"),10),
                   uwagi:$(this).find("[contenteditable=true]").eq(3).val()
               }
-              data.push(purchaseOrders);
+              purchaseOrdersList.data.push(purchaseOrders);
                 alert("działa");
             })
 
+            var dataContainer = {
+                data: []
+            };
+
+            dataContainer.data.push({
+                name: 'Joe',
+                age: 33
+            });
+
+            dataContainer.data.push({
+                name: 'Mary',
+                age: 18
+            });
+
             $.ajax({
-                method: "PUT",
+                method: "POST",
                 url: "update",
-                dataType: "JSON",
                 contentType: "application/json",
-                data: JSON.stringify(data)
+                data: JSON.stringify(dataContainer)
             })
                 .done(function( msg ) {
                     alert( "Data Saved: " + msg );
