@@ -1,9 +1,6 @@
 package com.fibaro.controller;
 
-import com.fibaro.model.DataContainerDto;
-import com.fibaro.model.FullContent;
-import com.fibaro.model.PurchaseOrders;
-import com.fibaro.model.PurchaseOrdersDTO;
+import com.fibaro.model.*;
 import com.fibaro.service.DBConnector;
 import com.fibaro.service.FullContentDao;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,6 +19,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -107,7 +105,27 @@ public class TheVeryController {
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
     @ResponseBody
-    public String updatePurchaseOrders(@RequestBody DataContainerDto dataContainerDto) {
+    public String updatePurchaseOrders(@RequestBody PurchaseOrdersFakeDTO purchaseOrdersFakeDTO) {
+       List<PurchaseOrders>  purchaseOrdersList=new ArrayList<>();
+
+
+            for (PurchaseOrdersFake fake: purchaseOrdersFakeDTO.getPurchaseOrdersFakeList()) {
+                PurchaseOrders p = new PurchaseOrders();
+                    p.setNumer_zamowienia(fake.getNumer_zamowienia());
+                    p.setNumer_pozycji(Integer.parseInt(fake.getNumer_pozycji()));
+                    p.setIndeks_czesci(fake.getIndeks_czesci());
+                    p.setNazwa_czesci(fake.getNazwa_czesci());
+                    p.setKl_termin(LocalDate.parse(fake.getKl_termin()));
+                    p.setPr_termin(LocalDate.parse(fake.getPr_termin()));
+                    p.setIlosc_zlecona( Integer.parseInt(fake.getIlosc_zlecona().replaceAll("[^\\d]","")));
+                    p.setIlosc_do_przyjecia(Integer.parseInt(fake.getIlosc_do_przyjecia().replaceAll("[^\\d]","")));
+                    p.setUwagi(fake.getUwagi());
+                    p.setNumer_kontrahenta(Long.parseLong(fake.getNumer_kontrahenta().replaceAll("[^\\d]","")));
+                purchaseOrdersList.add(p);
+
+            }
+
+
         return null;
     }
 

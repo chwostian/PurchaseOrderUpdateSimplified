@@ -14,45 +14,33 @@ $(document).ready(function(){
         e.stopPropagation();
         var vRows = $("[data-hidden=false]");
         if (vRows.length > 0) {
-            var data = [];
-            var purchaseOrdersList = { data:[]}
+
+            var purchaseOrdersFakeDTO = { purchaseOrdersFakeList:[]}
             vRows.each(function(index, element) {
-              var  purchaseOrders= {
+              var  purchaseOrdersFake= {
+                  numer_zamowienia:$(this).data("numer_zamowienia").toString(),
+                  numer_pozycji:$(this).data("numer_pozycji").toString(),
                   indeks_czesci: $(this).data("indeks_czesci").toString(),
                   indeks: $(this).data("indeks").toString(),
-                  nazwa_pelna:$(this).data("nazwa_pelna"),
-                  numer_kontrahenta:$(this).data("numer_kontrahenta"),
-                  numer_zamowienia:$(this).data("numer_zamowienia"),
-                  numer_pozycji:$(this).data("numer_pozycji"),
-                  kl_termin: $(this).find("[contenteditable=true]").eq(0).val(),
-                  pr_termin:$(this).find("[contenteditable=true]").eq(1).val(),
-                  ilosc_zlecona:parseInt($(this).find("[contenteditable=true]").eq(2).val(),10),
-                  ilosc_do_przyjecia: parseInt($(this).find("[n_ilosc_do_przyjecia]"),10),
-                  uwagi:$(this).find("[contenteditable=true]").eq(3).val()
+                  nazwa_czesci:$(this).data("nazwa_pelna").toString(),
+                  kl_termin: $(this).find("[contenteditable=true]").eq(0).val().toString(),
+                  pr_termin:$(this).find("[contenteditable=true]").eq(1).val().toString(),
+                  ilosc_zlecona:$(this).find("[contenteditable=true]").eq(2).val().toString(),
+                  ilosc_do_przyjecia: $(this).data("n_ilosc_do_przyjecia").toString(),
+                  uwagi:$(this).find("[contenteditable=true]").eq(3).val().toString(),
+                  numer_kontrahenta:$(this).data("numer_kontrahenta").toString()
               }
-              purchaseOrdersList.data.push(purchaseOrders);
+              purchaseOrdersFakeDTO.purchaseOrdersFakeList.push(purchaseOrdersFake);
                 alert("działa");
             })
 
-            var dataContainer = {
-                data: []
-            };
 
-            dataContainer.data.push({
-                name: 'Joe',
-                age: 33
-            });
-
-            dataContainer.data.push({
-                name: 'Mary',
-                age: 18
-            });
 
             $.ajax({
                 method: "POST",
                 url: "update",
                 contentType: "application/json",
-                data: JSON.stringify(dataContainer)
+                data: JSON.stringify(purchaseOrdersFakeDTO)
             })
                 .done(function( msg ) {
                     alert( "Data Saved: " + msg );
