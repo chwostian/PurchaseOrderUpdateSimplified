@@ -29,7 +29,7 @@
 
         <th id="update" class="sticky0" colspan="3">Update purchase orders <i class="fa fa-database"/></th>
         <th class="sticky" colspan="2"><a href="/PurchaseOrderUpdaterSimplified/uploadFile" method="get">Upload file <i class="fa fa-download"></i></a></th>
-        <th class="sticky0" >Export to Ms Excel <i class="fa fa-file-excel-o"/></th>
+        <th id="export_to_excel" class="sticky0" >Export to Ms Excel <i class="fa fa-file-excel-o"/></th>
         <th class="sticky0" >Export to pdf <i class="fa fa-file-pdf-o"/></th>
         <th class="sticky0" colspan="2">Send mail <i class="fa fa-send-o"/></th>
 
@@ -119,7 +119,7 @@
                     <td class="center"><i class="glyphicon glyphicon-remove"/></td>
                 </c:otherwise>
             </c:choose>
-            <td><button class="remove">Remove row</button></td>
+            <td data-button="true"><button class="remove">Remove row</button></td>
         </tr>
 
         </c:forEach>

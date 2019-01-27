@@ -35,7 +35,7 @@ public class PurchaseOrdersDao {
                 "join zamowienia_zakupu zz on pz.numer_zamowienia = zz.numer_zamowienia and pz.id_firmy = zz.id_firmy" + System.lineSeparator() +
                 "left join v_kontrahenci vk on zz.numer_kontrahenta = vk.numer_kontrahenta and zz.id_firmy = vk.id_firmy" + System.lineSeparator() +
                 "join indeksy i on pz.indeks_czesci = i.indeks_czesci" + System.lineSeparator() +
-            "where zz.numer_kontrahenta = ? and pz.status_zamowienia = 'O' and pz.id_firmy = '1'" + System.lineSeparator() +
+            "where zz.numer_kontrahenta = ? and pz.status_zamowienia = 'O' and pz.STATUS_POZYCJI_USER IN('CD','O') and pz.id_firmy = '1'" + System.lineSeparator() +
             "order by zz.numer_kontrahenta, i.indeks, pr_termin";
 
 
@@ -51,6 +51,7 @@ public class PurchaseOrdersDao {
         ResultSet resultSet = preparedStatement.executeQuery();
         LocalDate kl_termin;
         LocalDate pr_termin;
+
         while (resultSet.next()) {
             PurchaseOrders purchaseOrders = new PurchaseOrders();
             purchaseOrders.setNumer_kontrahenta(resultSet.getLong("numer_kontrahenta"));
@@ -70,6 +71,7 @@ public class PurchaseOrdersDao {
             purchaseOrders.setIlosc_zlecona(resultSet.getInt("ilosc_zlecona"));
             purchaseOrders.setIlosc_do_przyjecia(resultSet.getInt("ilosc_do_przyjecia"));
             purchaseOrders.setUwagi(resultSet.getString("uwagi"));
+
             ordersSet.add(purchaseOrders);}
 
         return ordersSet;}

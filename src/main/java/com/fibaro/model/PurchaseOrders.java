@@ -1,5 +1,6 @@
 package com.fibaro.model;
 
+import javax.validation.constraints.Null;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,9 +15,13 @@ public class PurchaseOrders {
     private String indeks;
     private String nazwa_czesci;
     private LocalDate kl_termin;
+    @Null
     private LocalDate pr_termin;
+    @Null
     private Integer ilosc_zlecona;
+    @Null
     private Integer ilosc_do_przyjecia;
+    @Null
     private String uwagi;
     private Long numer_kontrahenta;
 

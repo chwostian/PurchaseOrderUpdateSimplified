@@ -105,7 +105,7 @@ public class TheVeryController {
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
     @ResponseBody
-    public String updatePurchaseOrders(@RequestBody PurchaseOrdersFakeDTO purchaseOrdersFakeDTO) {
+    public ReturnPurchaseOrdersFakeDTO updatePurchaseOrders(@RequestBody PurchaseOrdersFakeDTO purchaseOrdersFakeDTO, HttpServletResponse response, HttpSession ses) throws SQLException {
        List<PurchaseOrders>  purchaseOrdersList=new ArrayList<>();
 
 
@@ -115,18 +115,33 @@ public class TheVeryController {
                     p.setNumer_pozycji(Integer.parseInt(fake.getNumer_pozycji()));
                     p.setIndeks_czesci(fake.getIndeks_czesci());
                     p.setNazwa_czesci(fake.getNazwa_czesci());
-                    p.setKl_termin(LocalDate.parse(fake.getKl_termin()));
-                    p.setPr_termin(LocalDate.parse(fake.getPr_termin()));
-                    p.setIlosc_zlecona( Integer.parseInt(fake.getIlosc_zlecona().replaceAll("[^\\d]","")));
-                    p.setIlosc_do_przyjecia(Integer.parseInt(fake.getIlosc_do_przyjecia().replaceAll("[^\\d]","")));
+                    p.setKl_termin(fake.getKl_termin().length() == 0 ? null : LocalDate.parse(fake.getKl_termin()));
+                    p.setPr_termin(fake.getPr_termin().length() == 0 ? null : LocalDate.parse(fake.getPr_termin()));
+                    p.setIlosc_zlecona(fake.getIlosc_zlecona().length() == 0 ? null : Integer.parseInt(fake.getIlosc_zlecona().replaceAll("[^\\d]","")) );
+                    p.setIlosc_do_przyjecia(fake.getIlosc_do_przyjecia().length() == 0 ? null : Integer.parseInt(fake.getIlosc_do_przyjecia().replaceAll("[^\\d]","")));
                     p.setUwagi(fake.getUwagi());
                     p.setNumer_kontrahenta(Long.parseLong(fake.getNumer_kontrahenta().replaceAll("[^\\d]","")));
                 purchaseOrdersList.add(p);
 
             }
 
+            Connection conn = DBConnector.getConnection((String) ses.getAttribute("user"),(String) ses.getAttribute("password"));
+            int i = 0;
 
-        return null;
+            List<ReturnPurchaseOrdersFake> returnPurchaseOrdersFakeList = new ArrayList<>();
+
+            for (PurchaseOrders purchaseOrders: purchaseOrdersList) {
+                i = PurchaseOrdersUpdater.update(conn, purchaseOrders);
+                ReturnPurchaseOrdersFake returnPurchaseOrdersFake = new ReturnPurchaseOrdersFake();
+                returnPurchaseOrdersFake.setPurchaseOrders(purchaseOrders);
+                returnPurchaseOrdersFake.setUpdated(i);
+                returnPurchaseOrdersFakeList.add(returnPurchaseOrdersFake);
+                i = 0;
+            }
+
+            ReturnPurchaseOrdersFakeDTO returnPurchaseOrdersFakeDTO = new ReturnPurchaseOrdersFakeDTO();
+        returnPurchaseOrdersFakeDTO.setReturnPurchaseOrdersFakeList(returnPurchaseOrdersFakeList);
+        return returnPurchaseOrdersFakeDTO;
     }
 
 }

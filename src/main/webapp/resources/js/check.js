@@ -9,47 +9,66 @@ $(document).ready(function(){
         $(this).css("background-color", "yellow");
 
     })
-
+    //początek update
     $("#update").on("click", function(e) {
         e.stopPropagation();
-        var vRows = $("[data-hidden=false]");
-        if (vRows.length > 0) {
+        if ($("[data-has_been_updated='true']").length === 0) {
+            var vRows = $("[data-hidden=false]");
+            if (vRows.length > 0) {
 
-            var purchaseOrdersFakeDTO = { purchaseOrdersFakeList:[]}
-            vRows.each(function(index, element) {
-              var  purchaseOrdersFake= {
-                  numer_zamowienia:$(this).data("numer_zamowienia").toString(),
-                  numer_pozycji:$(this).data("numer_pozycji").toString(),
-                  indeks_czesci: $(this).data("indeks_czesci").toString(),
-                  indeks: $(this).data("indeks").toString(),
-                  nazwa_czesci:$(this).data("nazwa_pelna").toString(),
-                  kl_termin: $(this).find("[contenteditable=true]").eq(0).val().toString(),
-                  pr_termin:$(this).find("[contenteditable=true]").eq(1).val().toString(),
-                  ilosc_zlecona:$(this).find("[contenteditable=true]").eq(2).val().toString(),
-                  ilosc_do_przyjecia: $(this).data("n_ilosc_do_przyjecia").toString(),
-                  uwagi:$(this).find("[contenteditable=true]").eq(3).val().toString(),
-                  numer_kontrahenta:$(this).data("numer_kontrahenta").toString()
-              }
-              purchaseOrdersFakeDTO.purchaseOrdersFakeList.push(purchaseOrdersFake);
-                alert("działa");
-            })
+                var purchaseOrdersFakeDTO = {purchaseOrdersFakeList: []}
+                vRows.each(function (index, element) {
+                    var purchaseOrdersFake = {
+                        numer_zamowienia: $(this).data("numer_zamowienia").toString(),
+                        numer_pozycji: $(this).data("numer_pozycji").toString(),
+                        indeks_czesci: $(this).data("indeks_czesci").toString(),
+                        indeks: $(this).data("indeks").toString(),
+                        nazwa_czesci: $(this).data("nazwa_pelna").toString(),
+                        kl_termin: $(this).find("[contenteditable=true]").eq(0).val().toString(),
+                        pr_termin: $(this).find("[contenteditable=true]").eq(1).val().toString(),
+                        ilosc_zlecona: $(this).find("[contenteditable=true]").eq(2).val().toString(),
+                        ilosc_do_przyjecia: $(this).data("n_ilosc_do_przyjecia").toString(),
+                        uwagi: $(this).find("[contenteditable=true]").eq(3).val().toString(),
+                        numer_kontrahenta: $(this).data("numer_kontrahenta").toString()
+                    }
+                    purchaseOrdersFakeDTO.purchaseOrdersFakeList.push(purchaseOrdersFake);
+
+                })
 
 
+                $.ajax({
+                    method: "POST",
+                    url: "update",
+                    contentType: "application/json",
+                    data: JSON.stringify(purchaseOrdersFakeDTO)
+                })
+                    .done(function (msg) {
+                        var selector;
+                        var dblQuote = String.fromCharCode(34);
+                        var sngQuote = String.fromCharCode(39);
+                        alert("Data Saved: " + msg);
+                        console.log(msg[0]);
+                        if (msg.returnPurchaseOrdersFakeList.length > 0) {
+                            msg.returnPurchaseOrdersFakeList.forEach(function (element, index) {
+                                selector = "[data-numer_zamowienia=" + sngQuote + element.purchaseOrders.numer_zamowienia + sngQuote + "]"
+                                selector += "[data-numer_pozycji=" + sngQuote + element.purchaseOrders.numer_pozycji + sngQuote + "]";
+                                alert(selector);
+                                var newElement = element.updated > 0 ? '<td class="center"><i class=\"glyphicon glyphicon-ok\"/></td>' : '<td class="center"><i class="glyphicon glyphicon-remove"/></td>';
+                                $(selector).append(newElement);
+                                $(selector).attr("data-has_been_updated", "true");
+                            })
+                        }
+                        // window.location.reload(true);
 
-            $.ajax({
-                method: "POST",
-                url: "update",
-                contentType: "application/json",
-                data: JSON.stringify(purchaseOrdersFakeDTO)
-            })
-                .done(function( msg ) {
-                    alert( "Data Saved: " + msg );
-                });
+                    });
+            } else {
+                alert("Nic się nie zmieniło. Nie ma pozycji do aktualizacji");
+            }
         } else {
-            alert("Nic się nie zmieniło. Nie ma pozycji do aktualizacji");
+                alert("Na liście są pozycje, które próbowano zaktualizować. Ponowne wysłanie zapytania do bazy nie jest możliwe. Przeładuję stronę");
+                window.location.reload(true);
         }
-
-
+    // koniec update
     })
 
     $("#comparison").on("dblclick", function(){
@@ -66,6 +85,39 @@ $(document).ready(function(){
         $(this).css("box-sizing","content-box");
         $(this).css("height", "auto");
         $(this).height($(this).prop("scrollHeight"));
+
+    })
+
+    //Export do excel
+
+    $("#export_to_excel").click("on", function(){
+
+        vRows = $('tr');
+
+        if (vRows.length > 0) {
+            var purchaseOrdersFakeDTO = {purchaseOrdersFakeList: []}
+            vRows.each(function (index, element) {
+                var purchaseOrdersFake = {
+                    numer_zamowienia: $(this).data("numer_zamowienia").toString(),
+                    numer_pozycji: $(this).data("numer_pozycji").toString(),
+                    indeks_czesci: $(this).data("indeks_czesci").toString(),
+                    indeks: $(this).data("indeks").toString(),
+                    nazwa_czesci: $(this).data("nazwa_pelna").toString(),
+                    kl_termin: $(this).find("[contenteditable=true]").eq(0).val().toString(),
+                    pr_termin: $(this).find("[contenteditable=true]").eq(1).val().toString(),
+                    ilosc_zlecona: $(this).find("[contenteditable=true]").eq(2).val().toString(),
+                    ilosc_do_przyjecia: $(this).data("n_ilosc_do_przyjecia").toString(),
+                    uwagi: $(this).find("[contenteditable=true]").eq(3).val().toString(),
+                    numer_kontrahenta: $(this).data("numer_kontrahenta").toString(),
+                    termin_dostawcy: $(this).data("termin_dostawcy").toString(),
+                    ilosc_do_przyjecia_wg_dostawcy: $(this).data("n__ilosc_do_przyjecia_wg_dostawcy").toString()
+                }
+                purchaseOrdersFakeDTO.purchaseOrdersFakeList.push(purchaseOrdersFake);
+
+            })
+            alert("oj bedziemy sobie eksportowac do woli");
+
+        }
 
     })
 })

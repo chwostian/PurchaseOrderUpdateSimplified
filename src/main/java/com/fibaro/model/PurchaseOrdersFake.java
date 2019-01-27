@@ -1,6 +1,8 @@
 package com.fibaro.model;
 
 
+
+
 public class PurchaseOrdersFake {
     private String numer_zamowienia;
     private String numer_pozycji;
@@ -13,6 +15,24 @@ public class PurchaseOrdersFake {
     private String ilosc_do_przyjecia;
     private String uwagi;
     private String numer_kontrahenta;
+    private String termin_dostawcy;
+    private String ilosc_do_przyjecia_wg_dostawcy;
+
+    public String getTermin_dostawcy() {
+        return termin_dostawcy;
+    }
+
+    public void setTermin_dostawcy(String termin_dostawcy) {
+        this.termin_dostawcy = termin_dostawcy;
+    }
+
+    public String getIlosc_do_przyjecia_wg_dostawcy() {
+        return ilosc_do_przyjecia_wg_dostawcy;
+    }
+
+    public void setIlosc_do_przyjecia_wg_dostawcy(String ilosc_do_przyjecia_wg_dostawcy) {
+        this.ilosc_do_przyjecia_wg_dostawcy = ilosc_do_przyjecia_wg_dostawcy;
+    }
 
     public String getIndeks_czesci() {
         return indeks_czesci;
