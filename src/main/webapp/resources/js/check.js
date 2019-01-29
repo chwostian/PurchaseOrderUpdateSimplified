@@ -1,16 +1,37 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     // Znajdźmy wszystkie, które mają atrybut contenteditable = true. Gdy zmieni się wartość oznaczymy to pole kolorem żółtym i zmienimy wartość
     // atrybuty data-hidden na false. Będziemy używać potem tego atrybutu, żeby chować wiersze, które nie zostały zmienione
-    $("[contenteditable=true]").on("change", function(e) {
+    $("[contenteditable=true]").on("change", function (e) {
         e.stopPropagation();
+        var markYellow = false;
         var vRow = $(this).closest("tr").eq(0);
-        vRow.attr("data-hidden","false");
-        $(this).css("background-color", "yellow");
+        //.replace(/\s/g, "") $(this).data("name") = n_ilosc_zlecona $(this).data("name") kl_termin pr_termin
+
+        switch ($(this).data("name")) {
+            case "n_ilosc_zlecona":
+                if (vRow.data("ilosc_zlecona").replace(/\s/g, "") != $(this).val().replace(/\s/g, "")) {
+                    markYellow = true;
+                }
+                break;
+            case "kl_termin":
+            case "pr_termin":
+                if (vRow.data($(this).data("name")) != $(this).val()) {
+                    markYellow = true;
+                }
+                break;
+        }
+        if (markYellow === true) {
+            vRow.attr("data-hidden", "false");
+            $(this).css("background-color", "yellow");
+        } else {
+            vRow.attr("data-hidden", "true");
+            $(this).css("background-color", "white");
+        }
 
     })
     //początek update
-    $("#update").on("click", function(e) {
+    $("#update").on("click", function (e) {
         e.stopPropagation();
         if ($("[data-has_been_updated='true']").length === 0) {
             var vRows = $("[data-hidden=false]");
@@ -58,31 +79,31 @@ $(document).ready(function(){
                                 $(selector).attr("data-has_been_updated", "true");
                             })
                         }
-                        // window.location.reload(true);
+
 
                     });
             } else {
                 alert("Nic się nie zmieniło. Nie ma pozycji do aktualizacji");
             }
         } else {
-                alert("Na liście są pozycje, które próbowano zaktualizować. Ponowne wysłanie zapytania do bazy nie jest możliwe. Przeładuję stronę");
-                window.location.reload(true);
+            alert("Na liście są pozycje, które próbowano zaktualizować. Ponowne wysłanie zapytania do bazy nie jest możliwe. Przeładuję stronę");
+            window.location.reload(true);
         }
-    // koniec update
+        // koniec update
     })
 
-    $("#comparison").on("dblclick", function(){
-            $("[data-hidden=true]").toggleClass("hide_or_show");
+    $("#comparison").on("dblclick", function () {
+        $("[data-hidden=true]").toggleClass("hide_or_show");
     })
 
-    $(".remove").on("click", function(e) {
+    $(".remove").on("click", function (e) {
         e.stopPropagation();
         $(this).closest("tr").fadeOut("slow");
     })
     //Zdarzenia dla textarea. Chcemy, żeby rozszerzanie tej kontrolki odbywało się wg scenariusza
-    $("textarea").on("keydown", function(e){
+    $("textarea").on("keydown", function (e) {
         e.stopPropagation();
-        $(this).css("box-sizing","content-box");
+        $(this).css("box-sizing", "content-box");
         $(this).css("height", "auto");
         $(this).height($(this).prop("scrollHeight"));
 
@@ -90,9 +111,9 @@ $(document).ready(function(){
 
     //Export do excel
 
-    $("#export_to_excel").click("on", function(){
+    $("#export_to_excel").click("on", function () {
 
-        vRows = $('tr');
+        vRows = $("tbody tr");
 
         if (vRows.length > 0) {
             var purchaseOrdersFakeDTO = {purchaseOrdersFakeList: []}
@@ -110,13 +131,22 @@ $(document).ready(function(){
                     uwagi: $(this).find("[contenteditable=true]").eq(3).val().toString(),
                     numer_kontrahenta: $(this).data("numer_kontrahenta").toString(),
                     termin_dostawcy: $(this).data("termin_dostawcy").toString(),
-                    ilosc_do_przyjecia_wg_dostawcy: $(this).data("n__ilosc_do_przyjecia_wg_dostawcy").toString()
+                    ilosc_do_przyjecia_wg_dostawcy: $(this).data("n_ilosc_do_przyjecia_wg_dostawcy").toString()
                 }
                 purchaseOrdersFakeDTO.purchaseOrdersFakeList.push(purchaseOrdersFake);
 
             })
-            alert("oj bedziemy sobie eksportowac do woli");
 
+            $.ajax({
+                method: "POST",
+                url: "createExcel",
+                contentType: "application/json",
+                data: JSON.stringify(purchaseOrdersFakeDTO)
+            })
+                .done(function (msg) {
+                        alert("świat jest piękny a ludzie cudowni");
+                    }
+                );
         }
 
     })
